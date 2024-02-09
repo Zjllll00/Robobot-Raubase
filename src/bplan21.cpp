@@ -75,7 +75,7 @@ void BPlan21::run()
 {
   if (not setupDone)
     setup();
-  if (ini["plan21"]["run"] == "false")
+  if (ini["plan21"]["run"] == "true")
     return;
   //
   UTime t;
