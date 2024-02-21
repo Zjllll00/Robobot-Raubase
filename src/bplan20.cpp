@@ -116,7 +116,6 @@ void BPlan20::run()
         if (medge.edgeValid)
         {
           toLog("Line detected, that is OK to follow");
-          mixer.setEdgeMode(false /* right */, -0.03 /* offset */);
           mixer.setVelocity(0.2);
         
           pose.dist = 0;
