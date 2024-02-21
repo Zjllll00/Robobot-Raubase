@@ -95,7 +95,7 @@ void BPlan20::run()
         pose.resetPose();
         toLog("forward at 0.1m/s");
         mixer.setVelocity(0.1);
-        state = 12;
+        state = 30;
         break;
 
       case 12: // forward until distance, then look for edge
