@@ -97,11 +97,7 @@ void BPlan20::run()
         mixer.setVelocity(0.1);
         state = 11;
         break;
-      case 11: // wait for distance
-        if (pose.dist >= 1.0)
-        { // done, and then
-          finished = true;
-        }
+  
         else if (t.getTimePassed() > 10)
           lost = true;
         break;
