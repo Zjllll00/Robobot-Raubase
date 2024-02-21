@@ -38,26 +38,26 @@
 #include "cmixer.h"
 #include "sdist.h"
 
-#include "bplan40.h"
+#include "bplan41.h"
 
 // create class object
-BPlan40 plan40;
+BPlan41 plan41;
 
 
-void BPlan40::setup()
+void BPlan41::setup()
 { // ensure there is default values in ini-file
-  if (not ini["plan40"].has("log"))
+  if (not ini["plan41"].has("log"))
   { // no data yet, so generate some default values
-    ini["plan40"]["log"] = "true";
-    ini["plan40"]["run"] = "false";
-    ini["plan40"]["print"] = "true";
+    ini["plan41"]["log"] = "true";
+    ini["plan41"]["run"] = "false";
+    ini["plan41"]["print"] = "true";
   }
   // get values from ini-file
-  toConsole = ini["plan40"]["print"] == "true";
+  toConsole = ini["plan41"]["print"] == "true";
   //
-  if (ini["plan40"]["log"] == "true")
+  if (ini["plan41"]["log"] == "true")
   { // open logfile
-    std::string fn = service.logPath + "log_plan40.txt";
+    std::string fn = service.logPath + "log_plan41.txt";
     logfile = fopen(fn.c_str(), "w");
     fprintf(logfile, "%% Mission plan40 logfile\n");
     fprintf(logfile, "%% 1 \tTime (sec)\n");
@@ -67,16 +67,16 @@ void BPlan40::setup()
   setupDone = true;
 }
 
-BPlan40::~BPlan40()
+BPlan41::~BPlan41()
 {
   terminate();
 }
 
-void BPlan40::run()
+void BPlan41::run()
 {
   if (not setupDone)
     setup();
-  if (ini["plan40"]["run"] == "false")
+  if (ini["plan41"]["run"] == "false")
     return;
   UTime t("now");
   bool finished = false;
@@ -86,7 +86,7 @@ void BPlan40::run()
   const int MSL = 100;
   char s[MSL];
   //
-  toLog("Plan40 started");
+  toLog("Plan41 started");
   //
   while (not finished and not lost and not service.stop)
   {
@@ -194,7 +194,7 @@ void BPlan40::run()
   }
   if (lost)
   { // there may be better options, but for now - stop
-    toLog("Plan40 got lost - stopping");
+    toLog("Plan41 got lost - stopping");
     mixer.setVelocity(0);
     mixer.setTurnrate(0);
   }
@@ -203,14 +203,14 @@ void BPlan40::run()
 }
 
 
-void BPlan40::terminate()
+void BPlan41::terminate()
 { //
   if (logfile != nullptr)
     fclose(logfile);
   logfile = nullptr;
 }
 
-void BPlan40::toLog(const char* message)
+void BPlan41::toLog(const char* message)
 {
   UTime t("now");
   if (logfile != nullptr)
