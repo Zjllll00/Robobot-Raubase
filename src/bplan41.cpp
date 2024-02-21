@@ -81,7 +81,7 @@ void BPlan40::run()
   UTime t("now");
   bool finished = false;
   bool lost = false;
-  state = 5;
+  state = 20;
   oldstate = state;
   const int MSL = 100;
   char s[MSL];
@@ -92,30 +92,14 @@ void BPlan40::run()
   {
     switch (state)
     {
-      case 5: // wait for Regbot, then go forward
-        if (dist.dist[0] < 0.25)
-        { // something is close, assume it is the Regbot
-          // start driving
-          pose.resetPose();
-          toLog("forward 0.1 m/sec");
-          mixer.setVelocity(0.25);
-          mixer.setTurnrate(0);
-          state = 12;
-        }
-        else if (t.getTimePassed() > 10)
-        {
-          toLog("Gave up waiting for Regbot");
-          lost = true;
-        }
-        break;
       case 12: // forward until distance, then look for edge
-        if (pose.dist > 0.3)
+        if (pose.dist > 0.1)
         {
           toLog("Continue until edge is found");
           state = 20;
           pose.dist = 0;
         }
-        else if (t.getTimePassed() > 10)
+        else if (t.getTimePassed() > 3)
         { // line should be found within 10 seconds, else lost
           toLog("failed to find line after 10 sec");
           lost = true;
@@ -126,9 +110,9 @@ void BPlan40::run()
         {
           toLog("found line, turn left");
           // set to edge control, left side and 0 offset
-          mixer.setVelocity(0.2); // slow
+          mixer.setVelocity(0.1); // slow
           mixer.setTurnrate(1.0); // rad/s
-          state = 30;
+          
           pose.dist = 0;
           pose.turned = 0;
         }
