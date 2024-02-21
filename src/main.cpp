@@ -49,10 +49,7 @@ int main (int argc, char **argv)
     gpio.setPin(16, 1);
     // run the planned missions
     plan20.run();
-    plan21.run();
-    plan40.run();
-    plan100.run();
-    plan101.run();
+   
     //
     mixer.setVelocity(0.0);
     mixer.setTurnrate(0.0);
