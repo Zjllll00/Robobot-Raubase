@@ -93,8 +93,8 @@ void BPlan20::run()
     { // make a shift in heading-mission
       case 10:
         pose.resetPose();
-        toLog("forward at 0.3m/s");
-        mixer.setVelocity(0.3);
+        toLog("forward at 0.1m/s");
+        mixer.setVelocity(0.1);
         state = 11;
         break;
       case 11: // wait for distance
