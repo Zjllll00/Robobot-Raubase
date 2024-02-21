@@ -118,7 +118,6 @@ void BPlan20::run()
           toLog("Line detected, that is OK to follow");
           mixer.setEdgeMode(false /* right */, -0.03 /* offset */);
           mixer.setVelocity(0.3);
-          state = 40;
           pose.dist = 0;
         }
         else if (t.getTimePassed() > 10)
