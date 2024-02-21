@@ -97,14 +97,6 @@ void BPlan20::run()
         mixer.setVelocity(0.1);
         state = 12;
         break;
-  
-        else if (t.getTimePassed() > 10)
-          lost = true;
-        break;
-      default:
-        toLog("Unknown state");
-        lost = true;
-        break;
 
       case 12: // forward until distance, then look for edge
         if (pose.dist > 0.2)
