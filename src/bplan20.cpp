@@ -76,7 +76,7 @@ void BPlan20::run()
 {
   if (not setupDone)
     setup();
-  if (ini["plan20"]["run"] == "true")
+  if (ini["plan20"]["run"] == "false")
     return;
   //
   UTime t("now");
