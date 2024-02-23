@@ -82,7 +82,7 @@ void BPlan20::run()
   UTime t("now");
   bool finished = false;
   bool lost = false;
-  state = 10;
+  state = 20;
   oldstate = state;
   //
   toLog("Plan20 started");
@@ -91,48 +91,17 @@ void BPlan20::run()
   {
     switch (state)
     { // make a shift in heading-mission
-      case 10:
-        pose.resetPose();
-        toLog("forward at 0.1m/s");
-        mixer.setVelocity(0.1);
-        state = 30;
-        break;
-
-      case 12: // forward until distance, then look for edge
-        if (pose.dist > 0.2)
+      case 20: // forward looking for line
+        if (medge.width > 0.05)
         {
-          toLog("Continue until edge is found");
+          toLog("found line, go straight");
+          
+          mixer.setVelocity(0.2); // slow
           state = 30;
           pose.dist = 0;
+          pose.turned = 0;
         }
-        else if (t.getTimePassed() > 10)
-        { // line should be found within 10 seconds, else lost
-          toLog("failed to find line after 10 sec");
-          lost = true;
-        }
-        break;
-    
-      case 30: // Continue turn until right edge is almost reached, then follow right edge
-        if (medge.edgeValid and medge.rightEdge > -0.04)
-        {
-          toLog("Line detected, that is OK to follow");
-          mixer.setEdgeMode(false /* right */, -0.03 /* offset */);
-          mixer.setVelocity(0.3);
-          pose.dist = 0;
-        }
-        else if (t.getTimePassed() > 10)
-        {
-          toLog("Time passed, no crossing line");
-          lost = true;
-        }
-        else if (pose.dist > 1.0)
-        {
-          toLog("Driven too long");
-          state = 90;
-        }
-        break;
-
-
+      break
     }
     if (state != oldstate)
     {
