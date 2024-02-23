@@ -102,6 +102,16 @@ void BPlan20::run()
           pose.turned = 0;
         }
       break
+
+      case 30: // Continue the curve 
+        if (medge.edgeValid and medge.rightEdge > -0.04)
+        {
+          toLog("Line detected, that is OK to follow");
+          mixer.setEdgeMode(false /* right */, -0.03 /* offset */);
+          mixer.setVelocity(0.3);
+          state = 40;
+          pose.dist = 0;
+        }
     }
     if (state != oldstate)
     {
