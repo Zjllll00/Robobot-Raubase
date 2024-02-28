@@ -91,7 +91,7 @@ void BPlan20::run()
   {
     switch (state)
     { // make a shift in heading-mission
-      case 30: // Continue turn until right edge is almost reached, then follow right edge
+      case 30: // Following the edge
        
           toLog("Line detected, that is OK to follow");
           mixer.setEdgeMode(true /* left */, 0 /* offset */);
