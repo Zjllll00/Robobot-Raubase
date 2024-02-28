@@ -91,19 +91,7 @@ void BPlan20::run()
   {
     switch (state)
     { // make a shift in heading-mission
-      case 20: // forward looking for line
-        if (medge.width > 0.05)
-        {
-          toLog("found line, go straight");
-          
-          mixer.setVelocity(0.2); // slow
-          state = 30;
-          pose.dist = 0;
-          pose.turned = 0;
-        }
-      break
-
-      case 30: // Continue the curve 
+      case 30: // Continue turn until right edge is almost reached, then follow right edge
         if (medge.edgeValid and medge.rightEdge > -0.04)
         {
           toLog("Line detected, that is OK to follow");
@@ -112,6 +100,19 @@ void BPlan20::run()
           state = 40;
           pose.dist = 0;
         }
+        else if (t.getTimePassed() > 10)
+        {
+          toLog("Time passed, no crossing line");
+          lost = true;
+        }
+        else if (pose.dist > 1.0)
+        {
+          toLog("Driven too long");
+          state = 90;
+        }
+        break;
+
+     
     }
     if (state != oldstate)
     {
