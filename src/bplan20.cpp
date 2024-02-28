@@ -82,7 +82,7 @@ void BPlan20::run()
   UTime t("now");
   bool finished = false;
   bool lost = false;
-  state = 20;
+  state = 30;
   oldstate = state;
   //
   toLog("Plan20 started");
@@ -95,7 +95,7 @@ void BPlan20::run()
         if (medge.edgeValid and medge.rightEdge > -0.04)
         {
           toLog("Line detected, that is OK to follow");
-          mixer.setEdgeMode(false /* right */, -0.03 /* offset */);
+          mixer.setEdgeMode(true /* left */, 0 /* offset */);
           mixer.setVelocity(0.3);
           state = 40;
           pose.dist = 0;
